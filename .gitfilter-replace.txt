@@ -1,0 +1,3 @@
+# Replace Groq API keys in git history
+# Replace Groq API keys in git history
+gsk_[A-Za-z0-9]+>GROQ_API_KEY_REDACTED
