@@ -1,0 +1,105 @@
+# Core OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local binaries and libraries
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Logs and temp
+*.log
+logs/
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# Python cache and build
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+build/
+dist/
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.env/
+.env*/
+.venv/
+ENV/
+
+# Environment and secrets
+.env
+.env.*
+*.env
+*.secret
+secrets.json
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node / Front-end
+node_modules/
+**/node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.yarn-cache/
+yarn-error.log
+package-lock.json
+pnpm-lock.yaml
+# Build outputs
+front-end/dist/
+front-end/build/
+**/dist/
+**/build/
+
+# Docker artifacts
+*.pid
+*.pid.lock
+
+# Images/outputs generated locally
+back-end/app/embeddings/
+
+# Databases and local data dumps
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+
+# Project-specific data folders (keep README if present)
+back-end/data/*
+!back-end/data/README.md
+
+# Postman local files
+back-end/docs/postman/*.tmp
+
+# VS Code local settings for containers, dev tunnels
+.devcontainer/
+
+# Coverage and testing
+coverage.xml
+pytestdebug.log
+
+# Azure/Cloud local
+.azure/
+
+# Misc
+.sass-cache/
+.cache-loader/
+.benchmarks/
