@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "OCR Hydrometer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Hydrometer Read",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/hydrometer/read",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "hydrometer", "read"]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "lang", "value": "pt", "type": "text" },
+            { "key": "detail", "value": "false", "type": "text" },
+            { "key": "files", "type": "file", "src": ["data/hidrometro1.jpg"] },
+            { "key": "files", "type": "file", "src": ["data/hidrometro2.png"] },
+            { "key": "files", "type": "file", "src": ["data/hidrometro.pdf"] }
+          ]
+        }
+      }
+    }
+    ,
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "info": {
+    "name": "Cadastro Pessoas e Imóveis",
+    "_postman_id": "b1c2f3a4-5678-90ab-cdef-1234567890cd",
+    "description": "Coleção de endpoints para cadastro e gerenciamento de Pessoas e Imóveis com filtros, paginação e ordenação.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Pessoas - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/pessoas",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "pessoas"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo_doc\": \"CPF\",\n  \"documento\": \"12345678900\",\n  \"nome\": \"Joao\",\n  \"sobre_nome\": \"Silva\",\n  \"nascimento\": \"1990-01-01\",\n  \"sexo\": \"MASCULINO\",\n  \"ativo\": true,\n  \"id_endereco_fatura\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "Pessoas - Listar (filtros + paginação)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/pessoas?ativo=true&sort_by=nome&order=asc&page=1&page_size=20",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "pessoas"],
+          "query": [
+            {"key": "tipo_doc", "value": "CPF"},
+            {"key": "documento", "value": "123"},
+            {"key": "nome", "value": "Joao"},
+            {"key": "sobre_nome", "value": "Silva"},
+            {"key": "sexo", "value": "MASCULINO"},
+            {"key": "ativo", "value": "true"},
+            {"key": "nascimento", "value": "1990-01-01"},
+            {"key": "sort_by", "value": "nome"},
+            {"key": "order", "value": "asc"},
+            {"key": "page", "value": "1"},
+            {"key": "page_size", "value": "20"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pessoas - Obter",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/pessoas/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "pessoas", "1"]
+        }
+      }
+    },
+    {
+      "name": "Pessoas - Atualizar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/pessoas/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "pessoas", "1"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo_doc\": \"CPF\",\n  \"documento\": \"12345678900\",\n  \"nome\": \"Joao\",\n  \"sobre_nome\": \"Silva\",\n  \"nascimento\": \"1990-01-01\",\n  \"sexo\": \"MASCULINO\",\n  \"ativo\": true,\n  \"id_endereco_fatura\": null\n}"
+        }
+      }
+    },
+    {
+      "name": "Pessoas - Remover",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/pessoas/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "pessoas", "1"]
+        }
+      }
+    },
+
+    {
+      "name": "Imóveis - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/imoveis",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "imoveis"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id_pessoa\": 1,\n  \"categoria\": \"LIGAÇÕES MEDIDAS\",\n  \"tipo\": \"Residencial Social\",\n  \"endereco\": \"Rua A\",\n  \"numero\": \"123\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"São Paulo\",\n  \"uf\": \"SP\",\n  \"cep\": \"01000-000\",\n  \"esgoto\": true,\n  \"consumo_misto\": false\n}"
+        }
+      }
+    },
+    {
+      "name": "Imóveis - Listar (filtros + paginação)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/imoveis?cidade=São&page=1&page_size=20&sort_by=cidade&order=asc",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "imoveis"],
+          "query": [
+            {"key": "cidade", "value": "São"},
+            {"key": "categoria", "value": "LIGAÇÕES MEDIDAS"},
+            {"key": "ativo", "value": "true"},
+            {"key": "cep", "value": "01000-000"},
+            {"key": "sort_by", "value": "cidade"},
+            {"key": "order", "value": "asc"},
+            {"key": "page", "value": "1"},
+            {"key": "page_size", "value": "20"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Imóveis - Obter",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/imoveis/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "imoveis", "1"]
+        }
+      }
+    },
+    {
+      "name": "Imóveis - Atualizar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/imoveis/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "imoveis", "1"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id_pessoa\": 1,\n  \"categoria\": \"LIGAÇÕES MEDIDAS\",\n  \"tipo\": \"Residencial Social\",\n  \"endereco\": \"Rua A\",\n  \"numero\": \"123\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"São Paulo\",\n  \"uf\": \"SP\",\n  \"cep\": \"01000-000\",\n  \"esgoto\": true,\n  \"consumo_misto\": false\n}"
+        }
+      }
+    },
+    {
+      "name": "Imóveis - Remover",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:3000/api/cadastro/imoveis/1",
+          "host": ["http://localhost"],
+          "port": "3000",
+          "path": ["api", "cadastro", "imoveis", "1"]
+        }
+      }
+    }
+  ]
+}
