@@ -33,6 +33,32 @@
     }
     ,
     {
+      "name": "Hydrometer Read + Invoice",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/ocr/hydrometer/read_and_invoice",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "ocr", "hydrometer", "read_and_invoice"]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "lang", "value": "pt", "type": "text" },
+            { "key": "detail", "value": "false", "type": "text" },
+            { "key": "ano", "value": "2025", "type": "text" },
+            { "key": "files", "type": "file", "src": ["data/1_hidrometro.jpg"] }
+          ]
+        }
+      }
+    }
+    ,
+    {
       "name": "Health",
       "request": {
         "method": "GET",

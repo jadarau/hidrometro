@@ -10,6 +10,7 @@ from app.agents.reading_agent import HydrometerReadingAgent
 from app.models.schemas import HydrometerResponse, HydrometerResult
 from app.config.settings import settings
 from app.tools.ocr import _ensure_reader
+from app.agents.invoice_agent import InvoiceAgent
 
 router = APIRouter()
 
@@ -91,8 +92,42 @@ async def read_hydrometer(
             else:
                 img = Image.open(io.BytesIO(content)).convert("RGB")
                 value = agent.read_from_image(img)
-            results.append(HydrometerResult(filename=filename, valor_da_leitura=value))
+            results.append(HydrometerResult(filename=filename, valor_da_leitura=str(value)))
         finally:
             await f.close()
 
     return HydrometerResponse(results=results)
+
+@router.post("/hydrometer/read_and_invoice")
+async def read_hydrometer_and_invoice(
+    files: List[UploadFile] = File(..., description="Imagens ou PDFs de hidrômetros"),
+    lang: str = Form("pt"),
+    detail: bool = Form(False),
+    ano: int = Form(...),
+):
+    try:
+        _ensure_reader(lang)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    agent = InvoiceAgent(lang=lang, detail=detail)
+    outputs = []
+    for f in files:
+        filename = f.filename or "file"
+        content = await f.read()
+        suffix = (filename.split(".")[-1] or "").lower()
+        try:
+            if suffix == "pdf":
+                from pdf2image import convert_from_bytes
+                pages = convert_from_bytes(content, dpi=300)
+                if len(pages) == 0:
+                    raise HTTPException(status_code=400, detail="PDF sem páginas.")
+                img = pages[0].convert("RGB")
+            else:
+                img = Image.open(io.BytesIO(content)).convert("RGB")
+            result = agent.run(filename=filename, image=img, ano=ano)
+            outputs.append(result)
+        finally:
+            await f.close()
+
+    return JSONResponse(outputs)
