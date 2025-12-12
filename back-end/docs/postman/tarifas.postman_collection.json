@@ -9,9 +9,58 @@
       "name": "Criar Tarifa (JSON)",
       "request": {
         "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]},
-        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residêncial Intermediária\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/tarifas/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "tarifas",
+            ""
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residêncial Intermediária\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"
+        }
+      }
+    },
+    {
+      "name": "Criar Tarifas em Lote (JSON)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/tarifas/bulk",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "tarifas",
+            "bulk"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tarifas\": []\n}\n"
+        }
       }
     },
     {
@@ -22,13 +71,27 @@
         "url": {
           "raw": "http://localhost:3000/api/tarifas?ano=2025&tipo_imovel=Residêncial%20Intermediária&categoria_ligacao=LIGAÇÕES%20MEDIDAS",
           "protocol": "http",
-          "host": ["localhost"],
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "tarifas"],
+          "path": [
+            "api",
+            "tarifas"
+          ],
           "query": [
-            {"key": "ano", "value": "2025"},
-            {"key": "tipo_imovel", "value": "Residêncial Intermediária"},
-            {"key": "categoria_ligacao", "value": "LIGAÇÕES MEDIDAS"}
+            {
+              "key": "ano",
+              "value": "2025"
+            },
+            {
+              "key": "tipo_imovel",
+              "value": "Residêncial Intermediária"
+            },
+            {
+              "key": "categoria_ligacao",
+              "value": "LIGAÇÕES MEDIDAS"
+            }
           ]
         }
       }
@@ -38,16 +101,48 @@
       "request": {
         "method": "GET",
         "header": [],
-        "url": {"raw": "http://localhost:3000/api/tarifas/1", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", "1"]}
+        "url": {
+          "raw": "http://localhost:3000/api/tarifas/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "tarifas",
+            "1"
+          ]
+        }
       }
     },
     {
       "name": "Atualizar Tarifa",
       "request": {
         "method": "PUT",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": {"raw": "http://localhost:3000/api/tarifas/1", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", "1"]},
-        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residêncial Intermediária\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 52.0\n  }]\n}"}
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/tarifas/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "tarifas",
+            "1"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residêncial Intermediária\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 52.0\n  }]\n}"
+        }
       }
     },
     {
@@ -55,7 +150,19 @@
       "request": {
         "method": "DELETE",
         "header": [],
-        "url": {"raw": "http://localhost:3000/api/tarifas/1", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", "1"]}
+        "url": {
+          "raw": "http://localhost:3000/api/tarifas/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "tarifas",
+            "1"
+          ]
+        }
       }
     },
     {
@@ -66,17 +173,39 @@
         "url": {
           "raw": "http://localhost:3000/api/tarifas/upload",
           "protocol": "http",
-          "host": ["localhost"],
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "tarifas", "upload"]
+          "path": [
+            "api",
+            "tarifas",
+            "upload"
+          ]
         },
         "body": {
           "mode": "formdata",
           "formdata": [
-            { "key": "ano", "value": "2025", "type": "text" },
-            { "key": "tipo_imovel", "value": "Residêncial Intermediária", "type": "text" },
-            { "key": "categoria_ligacao", "value": "LIGAÇÕES MEDIDAS", "type": "text" },
-            { "key": "arquivo", "type": "file", "src": "C:/projects/hidrometro/back-end/docs/tabela de tarifas embasa.xlsx" }
+            {
+              "key": "ano",
+              "value": "2025",
+              "type": "text"
+            },
+            {
+              "key": "tipo_imovel",
+              "value": "Residêncial Intermediária",
+              "type": "text"
+            },
+            {
+              "key": "categoria_ligacao",
+              "value": "LIGAÇÕES MEDIDAS",
+              "type": "text"
+            },
+            {
+              "key": "arquivo",
+              "type": "file",
+              "src": "C:/projects/hidrometro/back-end/docs/tabela de tarifas embasa.xlsx"
+            }
           ]
         }
       }
