@@ -6,6 +6,90 @@
   },
   "item": [
     {
+      "name": "Cadastrar Tarifas (JSON) - Residencial Social",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]},
+        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residencial Social\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [\n    {\n      \"faixa\": 1, \n      \"consumo_min\": 0, \n      \"consumo_max\": 6, \n      \"valor_minimo\": 50.0\n    }\n  ]\n}"}
+      }
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Residencial / Normal / Veraneio",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]},
+        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Residencial / Normal / Veraneio\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [\n    {\n      \"faixa\": 1, \n      \"consumo_min\": 0, \n      \"consumo_max\": 6, \n      \"valor_minimo\": 50.0\n    }\n  ]\n}"}
+      }
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Filantrópica",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]},
+        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Filantrópica\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [\n    {\n      \"faixa\": 1, \n      \"consumo_min\": 0, \n      \"consumo_max\": 6, \n      \"valor_minimo\": 50.0\n    }\n  ]\n}"}
+      }
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Comercial",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]},
+        "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Comercial\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [\n    {\n      \"faixa\": 1, \n      \"consumo_min\": 0, \n      \"consumo_max\": 6, \n      \"valor_minimo\": 50.0\n    }\n  ]\n}"}
+      }
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Serviços",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Serviços\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Comércios e outras atividades reduzidas",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Comércios e outras atividades reduzidas\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Derivações Comerciais de Água Bruta",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Derivações Comerciais de Água Bruta\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Construção e Industrial",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Construção e Industrial\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Pública",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Pública\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Serviços, comércios e outras atividades normal",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Serviços, comércios e outras atividades normal\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Serviços, comércios e outras atividades reduzidas",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Serviços, comércios e outras atividades reduzidas\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Construção / Industrial",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Construção / Industrial\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Água Tratada",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Água Tratada\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Água Bruta",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Água Bruta\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Sistemas Convencionais (Capital)",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Sistemas Convencionais (Capital)\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
+      "name": "Cadastrar Tarifas (JSON) - Sistemas Convencionais (Interior)",
+      "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "url": {"raw": "http://localhost:3000/api/tarifas/", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "tarifas", ""]}, "body": {"mode": "raw", "raw": "{\n  \"ano\": 2025,\n  \"tipo_imovel\": \"Sistemas Convencionais (Interior)\",\n  \"categoria_ligacao\": \"LIGAÇÕES MEDIDAS\",\n  \"faixas\": [{\n    \"faixa\": 1, \n    \"consumo_min\": 0, \n    \"consumo_max\": 6, \n    \"valor_minimo\": 50.0\n  }]\n}"}}
+    },
+    {
       "name": "Criar Tarifa (JSON)",
       "request": {
         "method": "POST",
