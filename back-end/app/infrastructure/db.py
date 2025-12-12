@@ -22,3 +22,16 @@ def init_db():
     except Exception:
         # Allow app to start even if DB is down
         pass
+
+
+def get_db():
+    """FastAPI dependency that provides a SQLAlchemy session per request."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        try:
+            db.close()
+        except Exception:
+            # Silently ignore close errors to not crash request teardown
+            pass

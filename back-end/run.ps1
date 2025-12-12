@@ -1,43 +1,65 @@
 Param(
-    [string]$HostIP = "0.0.0.0",
-    [int]$Port = 8000,
-    [switch]$NoReload
+    [int]$Port = 3000,
+    [switch]$Reinstall
 )
 
-# Ensure we're in the back-end folder
-Push-Location $PSScriptRoot
+Write-Host "Iniciando API (porta $Port) com Python 3.11 e venv..."
 
-# Create venv if missing (Python 3.11 recommended)
-if (!(Test-Path ".venv")) {
-    Write-Host "[setup] Creating Python 3.11 venv..."
-    try {
-        py -3.11 -m venv .venv
-    } catch {
-        Write-Host "[setup] Fallback to default python for venv..."
-        python -m venv .venv
+$ErrorActionPreference = "Stop"
+
+# Projeto raiz
+$Root = Split-Path (Split-Path $PSScriptRoot -Parent)
+$Backend = $PSScriptRoot
+$VenvPath = Join-Path $Root ".venv"
+$Python311 = "C:\Users\$env:USERNAME\AppData\Local\Programs\Python\Python311\python.exe"
+
+function Ensure-Venv {
+    if (!(Test-Path $VenvPath)) {
+        Write-Host "Criando venv com Python 3.11..."
+        & $Python311 -m venv $VenvPath
     }
 }
 
-# Activate venv
-Write-Host "[setup] Activating venv..."
-& ".\.venv\Scripts\Activate.ps1"
+function Activate-Venv {
+    $activate = Join-Path $VenvPath "Scripts\Activate.ps1"
+    if (Test-Path $activate) {
+        . $activate
+    } else {
+        throw "Arquivo de ativação do venv não encontrado: $activate"
+    }
+}
 
-# Upgrade basic tooling
-Write-Host "[setup] Upgrading pip/setuptools/wheel..."
-python -m pip install --upgrade pip setuptools wheel | Out-Null
+function Install-Requirements {
+    $Req = Join-Path $Backend "requirements.txt"
+    if (!(Test-Path $Req)) { throw "Arquivo de requisitos não encontrado: $Req" }
+    Write-Host "Instalando dependências de $Req..."
+    python -m pip install -U pip wheel
+    pip install -r $Req
+}
 
-# Install requirements if not already satisfied
-Write-Host "[setup] Installing requirements..."
-pip install -r requirements.txt | Out-Null
+# Fluxo
+Ensure-Venv
+Activate-Venv
 
-# Set PYTHONPATH to include this back-end folder for reliable imports
-$env:PYTHONPATH = $PSScriptRoot
-Write-Host "[env] PYTHONPATH set to $($env:PYTHONPATH)"
+if ($Reinstall) {
+    Write-Host "Reinstalação solicitada (-Reinstall)."
+    Install-Requirements
+} else {
+    # Verifica se Pillow está instalado (para evitar erro PIL)
+    try {
+        python -c "import PIL"
+    } catch {
+        Write-Host "Pillow não encontrado. Instalando dependências..."
+        Install-Requirements
+    }
+}
 
-# Load uvicorn with optional reload
-$reloadArg = $NoReload.IsPresent ? "" : "--reload"
-Write-Host "[run] Starting uvicorn on $HostIP:$Port $reloadArg"
+# Subir API
+Set-Location $Backend
+
+# Determinar IP host e argumentos
+$HostIP = "0.0.0.0"
+$reloadArg = "--reload"
+Write-Host ("[run] Iniciando uvicorn em {0}:{1} {2}" -f $HostIP, $Port, $reloadArg)
+
 python -m uvicorn app.main:app --host $HostIP --port $Port $reloadArg
-
-# Restore location
-Pop-Location

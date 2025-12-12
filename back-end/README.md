@@ -5,10 +5,10 @@ This project provides a minimal OCR pipeline for images and PDFs using EasyOCR, 
 ## Setup (PowerShell)
 
 ```powershell
-# From the project root
-python -m venv .venv
+# From the project root (Python 3.11 recomendado)
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -U pip
+python -m pip install -U pip wheel
 pip install -r requirements.txt
 
 # For PDF support, you need Poppler installed (Windows):
@@ -48,19 +48,45 @@ docker compose -f docker-compose.db.yml up -d
 
 O volume persiste em `C:\bancos\hidrometro\db`.
 
+#### Remover container, volumes e imagem do banco
+
+```powershell
+# Derrubar o Postgres e remover volumes
+docker compose -f docker-compose.db.yml down -v
+
+# Opcional: remover a imagem do Postgres utilizada pelo compose
+# (PowerShell: remove todas as imagens 'postgres')
+docker images | Where-Object { $_.Repository -eq "postgres" } | ForEach-Object { docker image rm $_.ID }
+
+# Limpeza geral de imagens não utilizadas (opcional)
+docker image prune -f
+```
+
 ### Rodar a API
 
 ```powershell
 ### Rodar a API
 
 ```powershell
-python -m venv .venv
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+py -3.11 -m uvicorn app.main:app --reload --port 3000
 ```
 
 Acesse `http://localhost:3000/docs` (Swagger).
+
+#### Script de inicialização simplificada
+
+Use o script `run.ps1` para automatizar venv + dependências + subida do servidor:
+
+```powershell
+# Na pasta back-end
+Set-Location .\back-end
+./run.ps1            # sobe na porta 3000
+./run.ps1 -Port 9000 # muda a porta
+./run.ps1 -Reinstall # força reinstalação das dependências
+```
 
 #### Verificação rápida de saúde
 ```powershell
@@ -70,21 +96,21 @@ Invoke-WebRequest "http://localhost:3000/health" | Select-Object -ExpandProperty
 
 ```powershell
 # Preparar ambiente
-python -m venv .venv
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
 # Iniciar na porta padrão 3000 (entrypoint)
-python -m app
+py -3.11 -m app
 
 # Alterar porta via CLI
-python -m app --port 9000
+py -3.11 -m app --port 9000
 
 # Alternativa clássica: uvicorn com porta explícita
-python -m uvicorn app.main:app --reload --port 3000
+py -3.11 -m uvicorn app.main:app --reload --port 3000
 ```
 
-Acesse `http://localhost:8000/docs` (Swagger).
+Acesse `http://localhost:3000/docs` (Swagger).
 
 ### Endpoints de Cadastro
 
@@ -124,16 +150,16 @@ Notas:
 
 ```powershell
 # Pessoas: listar página 1, 20 itens, ordenado por nome asc
-Invoke-WebRequest "http://localhost:8000/api/cadastro/pessoas?ativo=true&sort_by=nome&order=asc&page=1&page_size=20"
+Invoke-WebRequest "http://localhost:3000/api/cadastro/pessoas?ativo=true&sort_by=nome&order=asc&page=1&page_size=20"
 
 # Imóveis: listar por cidade parcial, sort por cidade desc
 Invoke-WebRequest "http://localhost:3000/api/cadastro/imoveis?cidade=São&page=1&page_size=20&sort_by=cidade&order=desc"
 
 # Pessoas: última página com ordenação decrescente
-Invoke-WebRequest "http://localhost:8000/api/cadastro/pessoas?sort_by=nome&order=decrescente&page=última&page_size=10"
+Invoke-WebRequest "http://localhost:3000/api/cadastro/pessoas?sort_by=nome&order=decrescente&page=última&page_size=10"
 
 # Imóveis: primeira página com ordenação crescente
-Invoke-WebRequest "http://localhost:8000/api/cadastro/imoveis?sort_by=cidade&order=crescente&page=primeira&page_size=10"
+Invoke-WebRequest "http://localhost:3000/api/cadastro/imoveis?sort_by=cidade&order=crescente&page=primeira&page_size=10"
 
 #### Exemplo de resposta com cabeçalhos de paginação
 
@@ -274,7 +300,7 @@ Opção recomendada: defina `GROQ_API_KEY` via ambiente.
 
 ```powershell
 $env:GROQ_API_KEY = "SEU_TOKEN_AQUI"
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+py -3.11 -m uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
 
 # Leitura de hidrômetro (retorna { results: [ { filename, valor_da_leitura } ] })
 curl -X POST "http://localhost:8000/api/hydrometer/read" ^
@@ -285,17 +311,17 @@ curl -X POST "http://localhost:8000/api/hydrometer/read" ^
 ### Formas de inicialização
 
 ```powershell
-# 1) uvicorn global (se instalado globalmente)
-uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
+# 1) uvicorn via py launcher (recomendado)
+py -3.11 -m uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
 
 # 2) uvicorn do venv
 .\.venv\Scripts\uvicorn.exe app.main:app --host 0.0.0.0 --port 3000 --reload
 
-# 3) via Python (recomendado quando houver conflitos de PATH)
-python -m uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
+# 3) via Python absoluto (se preferir apontar caminho do 3.11)
+"C:\Users\jadson.araujo\AppData\Local\Programs\Python\Python311\python.exe" -m uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
 
 # Dica: ative o venv antes para garantir pacotes corretos
-python -m venv .venv
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r .\requirements.txt
 ```
@@ -322,7 +348,7 @@ pip install --force-reinstall -r .\requirements.txt
 ```powershell
 # Certifique-se de que a API está rodando e a GROQ_API_KEY configurada
 $env:GROQ_API_KEY = "SEU_TOKEN_AQUI"
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+py -3.11 -m uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
 
 # Requisição completa com múltiplos anexos (imagem + PDF)
 curl -X POST "http://localhost:8000/api/hydrometer/read" `
