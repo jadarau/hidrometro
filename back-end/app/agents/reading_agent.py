@@ -2,7 +2,7 @@ from typing import List
 from PIL import Image
 import base64
 import io
-from app.tools.ocr_tool import OCRTool
+from app.tools.ocr_tool import ocr_read_lines, ocr_read_lines_image
 from app.services.groq_client import GroqService
 from app.services.faturas_service import calcular_fatura
 from app.infrastructure.db import SessionLocal
@@ -17,7 +17,10 @@ def extract_matricula_from_filename(filename: str) -> int | None:
 
 class HydrometerReadingAgent:
     def __init__(self, lang: str = "pt", detail: bool = False, groq_model: str = "meta-llama/llama-4-maverick-17b-128e-instruct"):
-        self.ocr = OCRTool(lang=lang, detail=detail)
+        self.lang = lang
+        self.detail = detail
+        # Ferramentas disponíveis para o agente (expostas via @tool)
+        self.tools = [ocr_read_lines]
         self.groq = GroqService(model=groq_model)
 
     def read_from_image(self, img: Image.Image) -> str:
@@ -28,8 +31,19 @@ class HydrometerReadingAgent:
             image_b64 = base64.b64encode(buf.getvalue()).decode("ascii")
             return self.groq.extract_digits_from_image_base64(image_b64)
         except Exception:
-            # Fallback to OCR + text LLM parsing
-            lines: List[str] = self.ocr.extract_lines_from_image(img)
+            # Fallback para OCR via ferramenta @tool
+            try:
+                buf = io.BytesIO()
+                img.save(buf, format="PNG")
+                image_b64 = base64.b64encode(buf.getvalue()).decode("ascii")
+                lines: List[str] = self.tools[0].invoke({
+                    "image_b64": image_b64,
+                    "lang": self.lang,
+                    "detail": self.detail,
+                })
+            except Exception:
+                # Fallback direto sem o wrapper de ferramenta
+                lines = ocr_read_lines_image(img, lang=self.lang, detail=self.detail)
             ocr_text = "\n".join(lines)
             return self.groq.extract_digits(ocr_text)
 
