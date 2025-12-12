@@ -2,13 +2,14 @@ from fastapi import APIRouter, Depends, UploadFile, File, Form, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.infrastructure.db import get_db
-from app.models.schemas import TarifaAnoCreate, TarifaAno, TarifaFaixa, TipoImovel, CategoriaLigacao
+from app.models.schemas import TarifaAnoCreate, TarifaAno, TarifaFaixa, TipoImovel, CategoriaLigacao, TarifasBulkCreate
 from app.services.tarifas_service import (
     create_tarifa,
     list_tarifas,
     get_tarifa,
     update_tarifa,
     delete_tarifa,
+    create_tarifas_bulk,
 )
 from app.services.faturas_service import carregar_tarifas_xlsx
 
@@ -106,3 +107,23 @@ def upload_tarifas_xlsx(
     finally:
         os.remove(caminho)
     return {"tarifa_ano_id": tid, "ano": ano, "tipo_imovel": tipo_imovel, "categoria_ligacao": categoria_ligacao}
+
+@router.post("/bulk", response_model=List[TarifaAno])
+def criar_tarifas_em_lote(payload: TarifasBulkCreate, db: Session = Depends(get_db)):
+    created = create_tarifas_bulk(db, payload.tarifas)
+    resposta: List[TarifaAno] = []
+    for t in created:
+        resposta.append(TarifaAno(
+            id=t.id,
+            ano=t.ano,
+            tipo_imovel=t.tipo,
+            categoria_ligacao=t.categoria_ligacao,
+            faixas=[TarifaFaixa(
+                faixa=f.faixa,
+                consumo_min=f.consumo_min,
+                consumo_max=f.consumo_max,
+                valor_minimo=(f.valor_minimo / 100.0) if f.valor_minimo is not None else None,
+                valor_por_m3=(f.valor_por_m3 / 100.0) if f.valor_por_m3 is not None else None,
+            ) for f in t.faixas]
+        ))
+    return resposta

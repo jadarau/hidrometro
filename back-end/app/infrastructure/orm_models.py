@@ -48,6 +48,7 @@ class TarifaAnoDB(Base):
     tipo = Column(SAEnum(TipoImovel), nullable=False, index=True)
     categoria_ligacao = Column(SAEnum(CategoriaLigacao), nullable=False, index=True)
     __table_args__ = (UniqueConstraint("ano", "tipo", "categoria_ligacao", name="uq_tarifa_ano_categoria_ligacao"), )
+    faixas = relationship("TarifaFaixaDB", back_populates="tarifa_ano", cascade="all, delete-orphan")
 
 class TarifaFaixaDB(Base):
     __tablename__ = "tarifas_faixas"
@@ -58,5 +59,4 @@ class TarifaFaixaDB(Base):
     consumo_max = Column(Integer, nullable=True)  # None = sem limite superior
     valor_minimo = Column(Integer, nullable=True)  # centavos, quando aplicável na faixa 1
     valor_por_m3 = Column(Integer, nullable=True)  # centavos por m3
-
-    tarifa_ano = relationship("TarifaAnoDB", backref="faixas")
+    tarifa_ano = relationship("TarifaAnoDB", back_populates="faixas")

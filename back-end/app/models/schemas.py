@@ -29,8 +29,8 @@ class CategoriaLigacao(str, Enum):
 
 class TipoImovel(str, Enum):
     RESIDENCIAL_SOCIAL = "Residencial Social"
-    RESIDENCIAL_INTERMEDIARIA = "Residêncial Intermediária"
-    RESIDENCIAL_NORMAL_VERANEIO = "Residencial / Normal / Veraneio"
+    RESIDENCIAL_INTERMEDIARIA = "Residencial Intermediária"
+    RESIDENCIAL_NORMAL_VERANEIO = "Residencial Normal e Veraneio"
     FILANTROPICA = "Filantrópica"
     COMERCIAL = "Comercial"
     SERVICOS = "Serviços"
@@ -145,6 +145,9 @@ class TarifaAno(BaseModel):
     tipo_imovel: TipoImovel
     categoria_ligacao: CategoriaLigacao
     faixas: List[TarifaFaixa]
+
+class TarifasBulkCreate(BaseModel):
+    tarifas: List[TarifaAnoCreate]
 
 class FaturaCalculoRequest(BaseModel):
     matricula_imovel: int
