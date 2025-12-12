@@ -38,3 +38,25 @@ class ImovelDB(Base):
     consumo_misto = Column(Boolean, nullable=False)
 
     pessoa = relationship("PessoaDB", back_populates="imoveis")
+
+
+# Tarifa por ano e tipo de imóvel
+class TarifaAnoDB(Base):
+    __tablename__ = "tarifas_ano"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ano = Column(Integer, nullable=False, index=True)
+    tipo = Column(SAEnum(TipoImovel), nullable=False, index=True)
+    categoria_ligacao = Column(SAEnum(CategoriaLigacao), nullable=False, index=True)
+    __table_args__ = (UniqueConstraint("ano", "tipo", "categoria_ligacao", name="uq_tarifa_ano_categoria_ligacao"), )
+
+class TarifaFaixaDB(Base):
+    __tablename__ = "tarifas_faixas"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tarifa_ano_id = Column(Integer, ForeignKey("tarifas_ano.id", ondelete="CASCADE"), nullable=False, index=True)
+    faixa = Column(Integer, nullable=False)
+    consumo_min = Column(Integer, nullable=False)
+    consumo_max = Column(Integer, nullable=True)  # None = sem limite superior
+    valor_minimo = Column(Integer, nullable=True)  # centavos, quando aplicável na faixa 1
+    valor_por_m3 = Column(Integer, nullable=True)  # centavos por m3
+
+    tarifa_ano = relationship("TarifaAnoDB", backref="faixas")

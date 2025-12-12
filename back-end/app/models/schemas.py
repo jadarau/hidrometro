@@ -26,6 +26,7 @@ class CategoriaLigacao(str, Enum):
     ESGOTAMENTO_SANITARIO = "ESGOTAMENTO SANITÁRIO"
 
 
+
 class TipoImovel(str, Enum):
     RESIDENCIAL_SOCIAL = "Residencial Social"
     RESIDENCIAL_INTERMEDIARIA = "Residêncial Intermediária"
@@ -123,3 +124,38 @@ class PessoasPage(BaseModel):
 class ImoveisPage(BaseModel):
     items: List[Imovel]
     meta: PageMeta
+
+# Tarifa schemas
+class TarifaFaixa(BaseModel):
+    faixa: int
+    consumo_min: int
+    consumo_max: int | None
+    valor_minimo: float | None = None
+    valor_por_m3: float | None = None
+
+class TarifaAnoCreate(BaseModel):
+    ano: int
+    tipo_imovel: TipoImovel
+    categoria_ligacao: CategoriaLigacao
+    faixas: List[TarifaFaixa]
+
+class TarifaAno(BaseModel):
+    id: int
+    ano: int
+    tipo_imovel: TipoImovel
+    categoria_ligacao: CategoriaLigacao
+    faixas: List[TarifaFaixa]
+
+class FaturaCalculoRequest(BaseModel):
+    matricula_imovel: int
+    ano: int
+    consumo_m3: int
+
+class FaturaCalculoResponse(BaseModel):
+    ano: int
+    matricula_imovel: int
+    consumo_m3: int
+    valor_agua: float
+    valor_esgoto: float
+    total: float
+    detalhamento: List[dict]
